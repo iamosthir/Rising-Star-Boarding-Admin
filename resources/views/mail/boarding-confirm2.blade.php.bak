@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <style>
+        body{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h3,h2,h1,h4{
+            color: #797979;
+            font-weight: 500;
+        }
+        .container{
+            max-width: 800px;
+            margin: 0 auto;
+            height: 100%;
+            background-color:white;
+            padding: 0 15px;
+        }
+        .title{
+            width: 100%;
+            background-color: #f1f1f1;
+        }
+        .title h3{
+            font-size: 35px;
+            text-align: center;
+            padding: 25px 0;
+            font-weight: 700;
+        }
+        .title h3 span{
+            color: red;
+        }
+        .footer{
+            background-color: rgba(0,0,0,0.7);
+            padding: 5px;
+            text-align: center;
+            color: white;
+        }
+        table{
+            width: 100%;
+            text-align: center;
+            padding-bottom: 15px;
+        }
+        thead{
+            background-color: ghostwhite;
+        }
+        th,td{
+            color: #797979;
+            text-align: center;
+            padding: 10px 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h3><span>Rising Star</span> Boarding</h3>
+        </div>
+        <div class="content">
+            <h2>Hello <strong>{{ $data["booking_data"]["customer"]["first_name"] }} {{ $data["booking_data"]["customer"]["last_name"] }}</strong>,</h2>
+            <h2 style="color: forestgreen;">You boarding reservation has been successfull.</h2>
+            <h3>Booking ID: #{{ $data["booking_data"]["id"] }}</h3>
+            <h4>Reservation Range : <strong>{{ \Carbon\Carbon::parse($data["booking_data"]["start_date"])->format("d F Y") }} - 
+                {{ \Carbon\Carbon::parse($data["booking_data"]["ending_date"])->format("d F Y") }}1</strong></h4>
+            <h4>Total Days: <strong>{{ $data["booking_data"]["stay_day"] }} Days</strong></h4>
+            <h4>Price: <strong>{{ $data["booking_data"]["price"] }} USD</strong></h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pet</th>
+                        <th>Kennel Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($data["pet_data"] as $pet)
+                    <tr>
+                        <td>{{ $pet["pet"]["name"] }}</td>
+                        <td>{{ $pet["kennel"]["unique_id"] }}</td>
+                    </tr>    
+                    @endforeach
+                    
+
+                </tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <p>Thanks for using our services.</p>
+            <p>© 2021 RisingStarBoarding</p>
+        </div>
+    </div>
+</body>
+</html>
